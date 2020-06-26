@@ -1,18 +1,29 @@
 /*
-  Status : discontinued
+  Status : running
   Author : Pranjal Bareth
   Date 	 : 26 JUNE 2020
   Time   : 02:22 AM
 */
+const express = require('express');
+const bodyParser = require('body-parser');
 const request = require('request');
-con1st argv = require ('yargs').argv;
+const app = express()
+
 const apiKey = 'de01d72d79ed41a14adefd8069ae91f5';
-//...
-//...
+
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.set('view engine', 'ejs')
+
+app.get('/', function (req, res) {
+  res.render('index', {weather: null, error: null});
+})
+
 app.post('/', function (req, res) {
-  let city = argv.c || 'bilaspur';
-let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
-request(url, function (err, response, body) {
+  let city = req.body.city;
+  let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${apiKey}`
+
+  request(url, function (err, response, body) {
     if(err){
       res.render('index', {weather: null, error: 'Error, please try again'});
     } else {
@@ -25,4 +36,8 @@ request(url, function (err, response, body) {
       }
     }
   });
+})
+
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!')
 })

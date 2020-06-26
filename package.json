@@ -1,4 +1,12 @@
 {
+  "now": 
+  {
+  "alias": "app1",
+        "env": {
+      "NODE_ENV": "production",
+      "PORT": "3001"
+    }
+  },
   "name": "weather",
   "version": "1.0.0",
   "description": "",
